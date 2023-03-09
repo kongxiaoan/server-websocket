@@ -1,17 +1,10 @@
-var express = require('express')
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser');
 
-var app = express()
+const app = express()
 
-const start = async() => {
-    try{
-        var server = app.listen(8080, function() {
-            var host = server.address().address
-            var port = server.address().port
-            console.log("Node.js 服务器已经启动， 访问地址： http://%s:%s", host, port)
-        });
-    }catch(e) {
-        console.error(e)
-    }
-}
+app.use(cors())
+app.use(bodyParser.json())
 
-module.exports = start
+module.exports = app;
