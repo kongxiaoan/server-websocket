@@ -1,0 +1,11 @@
+syntax = "proto3";
+package com.example.mylibrary;
+
+message IMClientParams {
+  string sendId = 1;
+  // 接收人uid
+  string chatWithId = 2;
+  int64 sendTime = 3;
+  // 发送内容
+  bytes body = 4;
+}
