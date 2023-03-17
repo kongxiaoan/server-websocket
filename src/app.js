@@ -4,7 +4,7 @@ const routes = require('./api/routes');
 const websocket = require('./services/websocket');
 
 const app = express();
-const port = process.env.PORT || 9000; // 默认端口号为 8080
+const port = process.env.PORT || 9001; // 默认端口号为 8080
 
 app.use(middleware);
 app.use('/api', routes);

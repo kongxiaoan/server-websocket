@@ -1,15 +1,18 @@
 const WebSocket = require('ws');
 const protobuf = require("protobufjs");
-const protoFile = "../public/IMClientParams.proto";
+const imFile = "../public/IMClientParams.proto";
+const imEnumFile = "../public/IMClientEnum.proto";
 
 function start_websocket() {
     (async () => {
-        const root = await protobuf.load(protoFile);
+        const imContent = await protobuf.load(imFile);
+        const imEnum = await protobuf.load(imEnumFile);
         
         // 生成解析器
-        const parser = root.lookupType("com.example.mylibrary.IMClientParams");
+        const imContentParser = imContent.lookupType("com.example.mylibrary.IMClientParams");
+        // const imEnumParser = imEnum.lookupType("com.example.mylibrary.IMClientCMDEnum");
         console.log("websocket 已启动")
-        const wss = new WebSocket.Server({ port: 8080 });
+        const wss = new WebSocket.Server({ port: 8081 });
         
         // 存储已验证的客户端
         const clients = new Set();
@@ -32,7 +35,7 @@ function start_websocket() {
                 if(message == 'pang') {
                     // pang
                 } else {
-                    const _message = parser.decode(message);
+                    const _message = imContentParser.decode(message);
                     const jsonMessage = _message.toJSON();
                     console.log(jsonMessage);
                     ws.send("我是服务端，收到了你的消息")
